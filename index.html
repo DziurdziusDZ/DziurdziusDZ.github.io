@@ -3,194 +3,652 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kamil Dziurdzia | Automation Engineer & Python/AI</title>
+  <title>Kamil Dziurdzia | Automation & Python/AI Engineer</title>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
           colors: {
-            brand: '#3b82f6',
-            darkBg: '#0f172a',
-            cardBg: '#1e293b'
+            brand: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          },
+          animation: {
+            'gradient-x': 'gradient-x 8s ease infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+              '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+            },
           }
         }
       }
     }
   </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+    /* Canvas background */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    /* Modal Glass */
+    .glass-modal {
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-gray-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+
+  <!-- Interactive Canvas Particles -->
+  <canvas id="bg-canvas"></canvas>
 
   <!-- NAVBAR -->
-  <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="#" class="text-xl font-bold tracking-tight text-white hover:text-blue-400 transition">
-        KD<span class="text-blue-500">.</span>
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-gray-950/75 border-b border-gray-800/80 transition-all">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
+      <a href="#" class="text-xl font-mono font-extrabold tracking-tight text-white flex items-center gap-1 hover:opacity-80 transition">
+        <span class="text-sky-400">&lt;</span>KD<span class="text-sky-400">/&gt;</span>
       </a>
-      <div class="space-x-6 text-sm font-medium text-slate-300">
-        <a href="#about" class="hover:text-blue-400 transition">O mnie</a>
-        <a href="#skills" class="hover:text-blue-400 transition">Umiejętności</a>
-        <a href="#projects" class="hover:text-blue-400 transition">Projekty</a>
-        <a href="#experience" class="hover:text-blue-400 transition">Doświadczenie</a>
-        <a href="#contact" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition">Kontakt</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO SECTION -->
-  <section class="max-w-6xl mx-auto px-6 pt-24 pb-16 flex flex-col md:flex-row items-center justify-between gap-12">
-    <div class="flex-1 space-y-6">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
-        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-        Automatyka Przemysłowa & Python / AI
-      </div>
-      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white">
-        Cześć, jestem <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Kamil Dziurdzia</span>
-      </h1>
-      <p class="text-slate-400 text-lg leading-relaxed">
-        Magister inżynier Automatyki i Robotyki Politechniki Śląskiej. Łączę praktyczne doświadczenie w programowaniu systemów PLC (Siemens TIA Portal) oraz uruchomieniach przemysłowych z uczeniem maszynowym i programowaniem w Pythonie.
-      </p>
-      <div class="flex flex-wrap gap-4 pt-2">
-        <a href="https://www.linkedin.com/in/kamil-dziurdzia-610873204" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition shadow-lg shadow-blue-600/20">
-          <i class="fa-brands fa-linkedin"></i> LinkedIn
-        </a>
-        <a href="mailto:dziurdziakamil@op.pl" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 font-medium hover:bg-slate-700 transition">
-          <i class="fa-solid fa-envelope"></i> Wyślij e-mail
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS SECTION -->
-  <section id="skills" class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">Umiejętności i Narzędzia</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       
-      <!-- Karta 1 -->
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition">
-        <div class="text-blue-400 text-2xl mb-4"><i class="fa-solid fa-microchip"></i></div>
-        <h3 class="text-lg font-semibold text-white mb-3">Automatyka & PLC</h3>
-        <ul class="text-sm text-slate-400 space-y-2">
-          <li>• Siemens TIA Portal (S7-1200 / S7-1500)</li>
-          <li>• Języki LAD oraz SCL</li>
-          <li>• Systemy HMI / WinCC</li>
-          <li>• Rozruch obiektowy & Diagnostyka (DTR)</li>
-        </ul>
-      </div>
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-sky-400 transition">O mnie</a>
+        <a href="#skills" class="hover:text-sky-400 transition">Technologie</a>
+        <a href="#projects" class="hover:text-sky-400 transition">Projekty & Case Studies</a>
+        <a href="#experience" class="hover:text-sky-400 transition">Doświadczenie</a>
+        <a href="#contact" class="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-medium shadow-md shadow-sky-600/20 transition transform active:scale-95">Kontakt</a>
+      </nav>
 
-      <!-- Karta 2 -->
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition">
-        <div class="text-cyan-400 text-2xl mb-4"><i class="fa-brands fa-python"></i></div>
-        <h3 class="text-lg font-semibold text-white mb-3">Python & Machine Learning</h3>
-        <ul class="text-sm text-slate-400 space-y-2">
-          <li>• TensorFlow / Keras, NumPy, Matplotlib</li>
-          <li>• Uczenie przez wzmacnianie (RL)</li>
-          <li>• CARLA Simulator (autonomiczna jazda)</li>
-          <li>• Testowanie i ewaluacja modeli LLM</li>
-        </ul>
-      </div>
-
-      <!-- Karta 3 -->
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition">
-        <div class="text-indigo-400 text-2xl mb-4"><i class="fa-solid fa-code"></i></div>
-        <h3 class="text-lg font-semibold text-white mb-3">Programowanie & Narzędzia</h3>
-        <ul class="text-sm text-slate-400 space-y-2">
-          <li>• C++, JavaScript, SQL</li>
-          <li>• Git, GitHub, Docker, Linux</li>
-          <li>• MATLAB / Simulink</li>
-          <li>• Jira, Confluence</li>
-        </ul>
-      </div>
-
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white text-xl">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
-  </section>
 
-  <!-- PROJECTS SECTION -->
-  <section id="projects" class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">Wybrane Projekty</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-gray-800 px-6 py-4 space-y-3 text-sm">
+      <a href="#about" class="block text-slate-300 hover:text-sky-400">O mnie</a>
+      <a href="#skills" class="block text-slate-300 hover:text-sky-400">Technologie</a>
+      <a href="#projects" class="block text-slate-300 hover:text-sky-400">Projekty</a>
+      <a href="#experience" class="block text-slate-300 hover:text-sky-400">Doświadczenie</a>
+      <a href="#contact" class="block text-sky-400 font-semibold">Kontakt</a>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- HERO SECTION -->
+    <section id="about" class="max-w-6xl mx-auto px-6 pt-24 pb-20 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div class="flex-1 space-y-6 text-center md:text-left">
+        
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/25 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Inżynier Automatyk & Python / AI Developer</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+          Cześć, jestem <br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-indigo-400 animate-gradient-x">
+            Kamil Dziurdzia
+          </span>
+        </h1>
+
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+          Magister inżynier Automatyki i Robotyki Politechniki Śląskiej. Łączę świat <strong class="text-white">automatyki przemysłowej</strong> (TIA Portal, obiekty produkcyjne) z <strong class="text-white">uczeniem maszynowym i Pythonem</strong> (autonomiczne pojazdy CARLA, RL, ewaluacja modeli LLM).
+        </p>
+
+        <!-- Metrics cards -->
+        <div class="grid grid-cols-3 gap-4 pt-2 max-w-lg mx-auto md:mx-0">
+          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 text-center">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400">2+</div>
+            <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Lata Exp.</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 text-center">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-emerald-400">2</div>
+            <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Uruchomienia</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 text-center">
+            <div class="text-xl sm:text-2xl font-bold font-mono text-indigo-400">M.Sc.</div>
+            <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">PolŚl</div>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
+          <a href="#projects" class="px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold transition shadow-lg shadow-sky-600/25 flex items-center gap-2">
+            <span>Zobacz Projekty</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/kamil-dziurdzia-610873204" target="_blank" class="px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 text-slate-200 border border-gray-700 font-medium transition flex items-center gap-2">
+            <i class="fa-brands fa-linkedin text-sky-400"></i>
+            <span>LinkedIn</span>
+          </a>
+          <button onclick="copyEmail()" class="px-4 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 text-slate-300 border border-gray-800 hover:border-gray-700 transition flex items-center gap-2" title="Kopiuj email">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="max-w-6xl mx-auto px-6 py-20 border-t border-gray-900">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-sky-400">Kompetencje</span>
+          <h2 class="text-3xl font-extrabold text-white mt-1">Tech Stack & Narzędzia</h2>
+        </div>
+        <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0">Technologie wykorzystywane w projektowaniu sterowania PLC, analizie danych oraz trenowaniu modeli AI.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- OT & Automation -->
+        <div class="p-7 rounded-2xl bg-gray-900/70 border border-gray-800 hover:border-sky-500/40 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Automatyka Przemysłowa</h3>
+          <p class="text-xs text-slate-400 mb-4">Projektowanie modułowe, wdrażanie standardów i testowanie systemów sterowania.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">Siemens TIA Portal</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">S7-1200 / S7-1500</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">SCL & LAD</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">WinCC / HMI</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">DTR & Schematy el.</span>
+          </div>
+        </div>
+
+        <!-- Python & AI -->
+        <div class="p-7 rounded-2xl bg-gray-900/70 border border-gray-800 hover:border-teal-500/40 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-brands fa-python"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Python & Machine Learning</h3>
+          <p class="text-xs text-slate-400 mb-4">Sieci neuronowe, Reinforcement Learning, przetwarzanie obrazu oraz ewaluacja modeli LLM.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">Python</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">TensorFlow / Keras</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">NumPy & Matplotlib</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">CARLA Simulator</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">LLM Benchmarking</span>
+          </div>
+        </div>
+
+        <!-- Software & Devops -->
+        <div class="p-7 rounded-2xl bg-gray-900/70 border border-gray-800 hover:border-indigo-500/40 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-code-merge"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Inżynieria & Narzędzia</h3>
+          <p class="text-xs text-slate-400 mb-4">Środowiska developerskie, konteneryzacja, skrypty integracyjne i systemy kontroli wersji.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">C++</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">JavaScript / SQL</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">Git / GitHub</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">Docker & Linux</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">MATLAB / Simulink</span>
+            <span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700/60 text-xs text-slate-200">Jira & Confluence</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION (INTERACTIVE) -->
+    <section id="projects" class="max-w-6xl mx-auto px-6 py-20 border-t border-gray-900">
       
-      <!-- Projekt 1 -->
-      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
         <div>
-          <span class="text-xs font-semibold px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Praca Magisterska</span>
-          <h3 class="text-xl font-bold text-white mt-4 mb-2">Autonomiczny pojazd w symulatorze CARLA</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
-            Implementacja algorytmów sterowania i nawigacji z omijaniem przeszkód. Przetwarzanie obrazu z kamer w czasie rzeczywistym oraz trenowanie modeli sieci neuronowych (Reinforcement Learning).
-          </p>
+          <span class="text-xs font-mono uppercase tracking-widest text-sky-400">Portfolio</span>
+          <h2 class="text-3xl font-extrabold text-white mt-1">Wybrane Projekty & Case Studies</h2>
         </div>
-        <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800 text-xs text-slate-400">
-          <span class="bg-slate-800 px-2 py-1 rounded">Python</span>
-          <span class="bg-slate-800 px-2 py-1 rounded">TensorFlow / Keras</span>
-          <span class="bg-slate-800 px-2 py-1 rounded">CARLA Simulator</span>
+        
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap gap-2 mt-4 md:mt-0">
+          <button onclick="filterProjects('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-medium bg-sky-600 text-white transition">Wszystkie</button>
+          <button onclick="filterProjects('ai')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-900 border border-gray-800 text-slate-400 hover:text-white transition">AI & ML</button>
+          <button onclick="filterProjects('plc')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-900 border border-gray-800 text-slate-400 hover:text-white transition">PLC & Automatyka</button>
+          <button onclick="filterProjects('tools')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-900 border border-gray-800 text-slate-400 hover:text-white transition">Narzędzia & Skrypty</button>
         </div>
       </div>
 
-      <!-- Projekt 2 -->
-      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Automatyka Przemysłowa</span>
-          <h3 class="text-xl font-bold text-white mt-4 mb-2">Modułowe oprogramowanie PLC & Uruchomienia</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4">
-            Tworzenie modułowej logiki sterowania PLC, udział w uruchomieniach na obiektach przemysłowych, diagnostyka sygnałów oraz integracja skryptów testowych (JS/Excel).
-          </p>
-        </div>
-        <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800 text-xs text-slate-400">
-          <span class="bg-slate-800 px-2 py-1 rounded">Siemens TIA Portal</span>
-          <span class="bg-slate-800 px-2 py-1 rounded">SCL / LAD</span>
-          <span class="bg-slate-800 px-2 py-1 rounded">WinCC</span>
-        </div>
+      <!-- Project Cards Grid -->
+      <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Generowane dynamicznie przez JavaScript poniżej -->
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & EDUCATION TIMELINE -->
+    <section id="experience" class="max-w-6xl mx-auto px-6 py-20 border-t border-gray-900">
+      <div class="mb-12">
+        <span class="text-xs font-mono uppercase tracking-widest text-sky-400">Doświadczenie</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Ścieżka Zawodowa & Edukacja</h2>
       </div>
 
-    </div>
-  </section>
+      <div class="relative border-l-2 border-gray-800 ml-3 md:ml-6 space-y-12">
+        
+        <!-- Item 1 -->
+        <div class="relative pl-8 md:pl-10">
+          <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-sky-500 border-4 border-gray-950"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+            <h3 class="text-lg font-bold text-white">Inżynier Automatyk</h3>
+            <span class="text-xs font-mono text-sky-400 bg-sky-500/10 px-3 py-1 rounded-full w-fit">2025 – Obecnie</span>
+          </div>
+          <p class="text-sm font-semibold text-slate-300 mb-2">Aiut Sp. z o.o.</p>
+          <ul class="text-sm text-slate-400 space-y-1.5 list-disc list-inside">
+            <li>Projektowanie i testowanie logiki sterowania PLC w środowisku <strong>Siemens TIA Portal</strong>.</li>
+            <li>Udział w <strong>2 projektach uruchomieniowych</strong> na obiektach przemysłowych, diagnostyka i debugowanie kodu w warunkach ruchowych.</li>
+            <li>Współtworzenie wewnętrznych standardów programistycznych i dokumentacji DTR.</li>
+            <li>Integracja narzędzi pomocniczych ze skryptami JavaScript i automatyzacją w Excelu/Jira.</li>
+          </ul>
+        </div>
 
-  <!-- EXPERIENCE SECTION -->
-  <section id="experience" class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">Doświadczenie i Edukacja</h2>
-    <div class="space-y-6">
+        <!-- Item 2 -->
+        <div class="relative pl-8 md:pl-10">
+          <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-teal-400 border-4 border-gray-950"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+            <h3 class="text-lg font-bold text-white">Specjalista ds. weryfikacji i trenowania modeli AI</h3>
+            <span class="text-xs font-mono text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full w-fit">2024</span>
+          </div>
+          <p class="text-sm font-semibold text-slate-300 mb-2">Outlier</p>
+          <ul class="text-sm text-slate-400 space-y-1.5 list-disc list-inside">
+            <li>Analiza poprawności logicznej i technicznej odpowiedzi generowanych przez zaawansowane modele językowe (LLM).</li>
+            <li>Tworzenie precyzyjnych promptów technicznych, debugowanie wygenerowanego kodu i ewaluacja algorytmów.</li>
+          </ul>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="relative pl-8 md:pl-10">
+          <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-indigo-500 border-4 border-gray-950"></div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+            <h3 class="text-lg font-bold text-white">Politechnika Śląska w Gliwicach</h3>
+            <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full w-fit">2020 – 2025</span>
+          </div>
+          <p class="text-sm font-semibold text-slate-300 mb-1">Magister inżynier & Inżynier — Automatyka i Robotyka</p>
+          <p class="text-xs text-slate-400">Specjalizacja związana z zaawansowanym sterowaniem, systemami autonomicznymi i metodami uczenia maszynowego w robotyce.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact" class="border-t border-gray-900 bg-gray-950 py-16">
+      <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+        <h2 class="text-3xl font-extrabold text-white">Porozmawiajmy o projektach</h2>
+        <p class="text-slate-400 text-sm max-w-md mx-auto">
+          Jestem otwarty na wyzwania w obszarze rozwoju oprogramowania PLC, inżynierii systemów sterowania oraz projektów Python / AI.
+        </p>
+
+        <div class="flex flex-wrap justify-center items-center gap-4 pt-4">
+          <a href="mailto:dziurdziakamil@op.pl" class="px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold transition flex items-center gap-2 shadow-lg shadow-sky-600/20">
+            <i class="fa-solid fa-envelope"></i>
+            <span>dziurdziakamil@op.pl</span>
+          </a>
+          <a href="https://www.linkedin.com/in/kamil-dziurdzia-610873204" target="_blank" class="px-6 py-3 rounded-xl bg-gray-900 hover:bg-gray-800 text-slate-200 border border-gray-800 font-medium transition flex items-center gap-2">
+            <i class="fa-brands fa-linkedin text-sky-400"></i>
+            <span>LinkedIn Profil</span>
+          </a>
+        </div>
+
+        <div class="pt-8 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-center gap-4 border-t border-gray-900">
+          <span>📍 Gliwice, Polska</span>
+          <span>•</span>
+          <span>📞 (+48) 513 289 347</span>
+          <span>•</span>
+          <span>© <span id="year"></span> Kamil Dziurdzia</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ==================== MODAL OVERLAY ==================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+
+    <!-- Modal Content Window -->
+    <div class="relative w-full max-w-3xl max-h-[90vh] glass-modal border border-gray-700/80 rounded-2xl shadow-2xl overflow-y-auto transform scale-95 transition-transform duration-300 p-6 sm:p-8 space-y-6">
       
-      <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+      <!-- Top header -->
+      <div class="flex items-start justify-between gap-4 border-b border-gray-800 pb-4">
         <div>
-          <h3 class="text-lg font-bold text-white">Aiut Sp. z o.o. — Inżynier Automatyk</h3>
-          <p class="text-sm text-slate-400">Projektowanie logiki PLC w TIA Portal, commissioning na obiektach, dokumentacja DTR.</p>
+          <span id="modal-category" class="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">Category</span>
+          <h3 id="modal-title" class="text-2xl font-bold text-white mt-2">Project Title</h3>
         </div>
-        <span class="text-xs font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full w-fit">2023 – Obecnie</span>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
       </div>
 
-      <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+      <!-- Description & Problem breakdown -->
+      <div class="space-y-4">
         <div>
-          <h3 class="text-lg font-bold text-white">Outlier — AI Trainer / LLM Specialist</h3>
-          <p class="text-sm text-slate-400">Weryfikacja promptów, debugowanie generowanego kodu oraz analiza logiki modeli językowych.</p>
+          <h4 class="text-xs font-mono uppercase text-sky-400 tracking-wider mb-1">Opis projektu & Cel</h4>
+          <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed"></p>
         </div>
-        <span class="text-xs font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full w-fit">2024</span>
+
+        <div>
+          <h4 class="text-xs font-mono uppercase text-emerald-400 tracking-wider mb-2">Kluczowe rozwiązania i architektura</h4>
+          <ul id="modal-highlights" class="text-sm text-slate-300 space-y-2 list-disc list-inside bg-gray-900/60 p-4 rounded-xl border border-gray-800"></ul>
+        </div>
+
+        <!-- Code/Tech Specs Box -->
+        <div>
+          <h4 class="text-xs font-mono uppercase text-indigo-400 tracking-wider mb-2">Specyfikacja techniczna</h4>
+          <pre id="modal-code" class="p-4 rounded-xl bg-gray-950 border border-gray-800 text-xs font-mono text-sky-300 overflow-x-auto"></pre>
+        </div>
+
+        <!-- Tech tags -->
+        <div>
+          <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">Stack technologiczny</h4>
+          <div id="modal-tags" class="flex flex-wrap gap-2"></div>
+        </div>
       </div>
 
-      <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <h3 class="text-lg font-bold text-white">Politechnika Śląska w Gliwicach</h3>
-          <p class="text-sm text-slate-400">Magister inżynier & Inżynier — Automatyka i Robotyka</p>
-        </div>
-        <span class="text-xs font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full w-fit">2020 – 2025</span>
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-gray-800 flex justify-end gap-3">
+        <button onclick="closeModal()" class="px-5 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-slate-200 text-sm font-medium transition">
+          Zamknij podgląd
+        </button>
       </div>
 
     </div>
-  </section>
+  </div>
 
-  <!-- FOOTER / CONTACT -->
-  <footer id="contact" class="border-t border-slate-800 mt-20 py-12 bg-slate-950">
-    <div class="max-w-6xl mx-auto px-6 text-center space-y-4">
-      <h3 class="text-2xl font-bold text-white">Skontaktuj się ze mną</h3>
-      <p class="text-slate-400 text-sm">Gliwice, Polska | dziurdziakamil@op.pl | (+48) 513 289 347</p>
-      <div class="flex justify-center gap-6 pt-4 text-xl text-slate-400">
-        <a href="https://www.linkedin.com/in/kamil-dziurdzia-610873204" target="_blank" class="hover:text-blue-400 transition"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="mailto:dziurdziakamil@op.pl" class="hover:text-blue-400 transition"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-      <p class="text-xs text-slate-400 pt-6">© Kamil Dziurdzia. Hosted on GitHub Pages.</p>
-    </div>
-  </footer>
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 border border-sky-500/40 text-slate-100 px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm">
+    <i class="fa-solid fa-circle-check text-sky-400 text-lg"></i>
+    <span>Skopiowano adres e-mail do schowka!</span>
+  </div>
 
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // 1. Projects Data
+    const projects = [
+      {
+        id: 'carla-rl',
+        category: 'ai',
+        categoryName: 'AI / Reinforcement Learning',
+        badgeColor: 'sky',
+        title: 'Autonomiczny pojazd w symulatorze CARLA (Praca Magisterska)',
+        shortDesc: 'System nawigacji i omijania przeszkód dla pojazdu autonomicznego z wykorzystaniem sieci neuronowych i Reinforcement Learning.',
+        fullDesc: 'Projekt badawczo-inżynierski polegający na zaprojektowaniu, wytrenowaniu i przetestowaniu algorytmów uczenia przez wzmacnianie (RL) w realistycznym środowisku symulacyjnym CARLA. Głównym zadaniem było bezkolizyjne doprowadzenie pojazdu z punktu A do punktu B z zachowaniem płynności toru jazdy.',
+        highlights: [
+          'Zbudowanie potoku przetwarzania obrazu w czasie rzeczywistym z kamer pokładowych pojazdu (RGB / segmentacja).',
+          'Implementacja i porównanie modeli głębokiego uczenia przez wzmacnianie (Deep Q-Learning / Actor-Critic) z podejściem klasycznym.',
+          'Zaprojektowanie funkcji nagrody (reward function) uwzględniającej prędkość, odchylenie od osi pasa oraz dystans od przeszkód.',
+          'Analiza telemetrii i wizualizacja wyników zbieżności uczenia przy użyciu Matplotlib i NumPy.'
+        ],
+        techSpecs: `// CARLA Environment & Policy Training Loop\nimport carla\nimport tensorflow as tf\nfrom tensorflow.keras import layers\n\n# Model Policy Architecture\nmodel = tf.keras.Sequential([\n    layers.Conv2D(32, (5, 5), activation='relu', input_shape=(120, 160, 3)),\n    layers.MaxPooling2D((2, 2)),\n    layers.Flatten(),\n    layers.Dense(64, activation='relu'),\n    layers.Dense(num_actions, activation='linear')\n])`,
+        tags: ['Python', 'TensorFlow / Keras', 'CARLA Simulator', 'NumPy', 'Matplotlib', 'Reinforcement Learning']
+      },
+      {
+        id: 'plc-tia',
+        category: 'plc',
+        categoryName: 'Automatyka Przemysłowa',
+        badgeColor: 'emerald',
+        title: 'Modułowe oprogramowanie PLC & Uruchomienia obiektowe',
+        shortDesc: 'Projektowanie logiki sterowania dla sterowników Siemens S7-1200/1500 w TIA Portal oraz commissioning na obiektach produkcyjnych.',
+        fullDesc: 'Doświadczenie w projektowaniu i optymalizacji kodu sterowników PLC w strukturze modułowej. Praca w rzeczywistych warunkach produkcyjnych przy 2 dużych projektach uruchomieniowych.',
+        highlights: [
+          'Pisanie przejrzystego, skalowalnego kodu w językach Structured Text (SCL) oraz Ladder Diagram (LAD).',
+          'Diagnostyka pętli sygnałowych, integracja falowników, wysp zaworowych oraz komunikacji PROFINET.',
+          'Tworzenie ekranów operatorskich HMI w Siemens WinCC z intuicyjną obsługą alarmów i trybów manualnych.',
+          'Współtworzenie wewnętrznych bibliotek funkcyjnych (FB/FC) i dokumentacji techniczno-rozruchowej (DTR).'
+        ],
+        techSpecs: `// Przykładowa struktura bloku FB w SCL (Siemens TIA Portal)\nFUNCTION_BLOCK "FB_DriveControl"\nVAR_INPUT\n    bEnable : BOOL;\n    rTargetSpeed : REAL;\nEND_VAR\nVAR_OUTPUT\n    bReady : BOOL;\n    bFault : BOOL;\nEND_VAR\n\nIF bEnable AND NOT bFault THEN\n    #bReady := TRUE;\n    // Logika sterowania napędem\nEND_IF;`,
+        tags: ['Siemens TIA Portal', 'S7-1200 / S7-1500', 'SCL', 'LAD', 'WinCC', 'Commissioning']
+      },
+      {
+        id: 'ai-eval',
+        category: 'ai',
+        categoryName: 'Ewaluacja AI & LLM',
+        badgeColor: 'indigo',
+        title: 'Weryfikacja modeli LLM & Prompt Engineering',
+        shortDesc: 'Analiza poprawności technicznej i logicznej odpowiedzi generowanych przez najnowocześniejsze modele językowe.',
+        fullDesc: 'Współpraca przy trenowaniu i ewaluacji zaawansowanych modeli sztucznej inteligencji w firmie Outlier. Skupienie na precyzji odpowiedzi technicznych, poprawności generowanego kodu oraz zgodności z zadanymi ograniczeniami.',
+        highlights: [
+          'Konstruowanie zaawansowanych promptów testowych mających na celu wykrycie halucynacji oraz błędów logicznych w kodzie Python / C++.',
+          'Ręczny i automatyczny benchmarking generowanych rozwiązań algorytmicznych.',
+          'Dostarczanie precyzyjnych zestawów danych korygujących (RLHF - Reinforcement Learning from Human Feedback).'
+        ],
+        techSpecs: `• Obszar: Python, Algorithms, Prompt Engineering, RLHF\n• Zadania: Debugging kodu LLM, ewaluacja złożoności obliczeniowej O(n)\n• Rezultat: Podniesienie jakości odpowiedzi modeli w zadaniach programistycznych`,
+        tags: ['LLM Benchmark', 'Python', 'Prompt Engineering', 'RLHF', 'Code Debugging']
+      },
+      {
+        id: 'tools-automation',
+        category: 'tools',
+        categoryName: 'Software & Integracje',
+        badgeColor: 'teal',
+        title: 'Narzędzia skryptowe i automatyzacja testów (JS/Excel)',
+        shortDesc: 'Integracja procesów testowych oraz zarządzania zadaniami w Jira z wykorzystaniem skryptów pomocniczych.',
+        fullDesc: 'Automatyzacja powtarzalnych procesów raportowania, walidacji sygnałów I/O oraz zarządzania projektami inżynierskimi.',
+        highlights: [
+          'Budowanie skryptów w JavaScript wspomagających analizę tabel sygnałów oraz weryfikację list I/O.',
+          'Automatyzacja arkuszy testowych Excel pod kątem tworzenia dokumentacji odbiorczej.',
+          'Sprawna integracja z workflow w systemach Jira i Confluence.'
+        ],
+        techSpecs: `// Skrypty walidacji arkuszy sygnałów I/O\nconst validateSignalList = (signals) => {\n  return signals.filter(sig => !sig.address || !sig.type);\n};`,
+        tags: ['JavaScript', 'Excel VBA / Scripts', 'Jira API', 'Git', 'Linux']
+      }
+    ];
+
+    // 2. Render Projects Cards
+    function renderProjects(filter = 'all') {
+      const container = document.getElementById('projects-container');
+      container.innerHTML = '';
+
+      const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'p-7 rounded-2xl bg-gray-900/80 border border-gray-800 hover:border-gray-700 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-500/5 group cursor-pointer';
+        card.onclick = () => openModal(p.id);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                ${p.categoryName}
+              </span>
+              <span class="text-xs text-slate-400 group-hover:text-sky-400 transition flex items-center gap-1">
+                Szczegóły <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition">${p.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">${p.shortDesc}</p>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-gray-800/80 text-xs">
+              ${p.tags.slice(0, 3).map(tag => `<span class="bg-gray-800/90 text-slate-300 px-2 py-1 rounded-md">${tag}</span>`).join('')}
+              ${p.tags.length > 3 ? `<span class="bg-gray-800/50 text-slate-400 px-2 py-1 rounded-md">+${p.tags.length - 3}</span>` : ''}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 3. Filter buttons click handler
+    function filterProjects(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-sky-600', 'text-white');
+        btn.classList.add('bg-gray-900', 'text-slate-400');
+      });
+      event.target.classList.add('bg-sky-600', 'text-white');
+      event.target.classList.remove('bg-gray-900', 'text-slate-400');
+      renderProjects(category);
+    }
+
+    // 4. Modal Functions
+    const modal = document.getElementById('project-modal');
+    const modalContent = modal.querySelector('.glass-modal');
+
+    function openModal(id) {
+      const p = projects.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('modal-category').innerText = p.categoryName;
+      document.getElementById('modal-title').innerText = p.title;
+      document.getElementById('modal-desc').innerText = p.fullDesc;
+
+      // Highlights
+      const highlightsList = document.getElementById('modal-highlights');
+      highlightsList.innerHTML = p.highlights.map(h => `<li class="leading-relaxed">${h}</li>`).join('');
+
+      // Tech specs
+      document.getElementById('modal-code').innerText = p.techSpecs;
+
+      // Tags
+      const tagsContainer = document.getElementById('modal-tags');
+      tagsContainer.innerHTML = p.tags.map(t => `<span class="px-2.5 py-1 rounded-md bg-gray-800 border border-gray-700 text-xs text-slate-200">${t}</span>`).join('');
+
+      // Open animation
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      modal.classList.add('opacity-0');
+      modalContent.classList.remove('scale-100');
+      modalContent.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }, 300);
+    }
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // 5. Copy Email Toast
+    function copyEmail() {
+      navigator.clipboard.writeText('dziurdziakamil@op.pl');
+      const toast = document.getElementById('toast');
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // 6. Mobile Menu Toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // 7. Footer current year
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    // 8. Dynamic Canvas Particles (Interactive background)
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.radius = Math.random() * 1.5 + 0.8;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#38bdf8';
+        ctx.fill();
+      }
+    }
+
+    const particleCount = Math.min(Math.floor(window.innerWidth / 20), 45);
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Initial render
+    renderProjects('all');
+  </script>
 </body>
 </html>

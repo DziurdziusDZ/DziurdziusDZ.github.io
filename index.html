@@ -497,18 +497,43 @@
       {
         id: 'ai-eval',
         category: 'ai',
-        categoryName: 'Ewaluacja AI & LLM',
+        categoryName: 'AI Alignment & Multimodal LLM',
         badgeColor: 'indigo',
-        title: 'Weryfikacja modeli LLM & Prompt Engineering',
-        shortDesc: 'Analiza poprawności technicznej i logicznej odpowiedzi generowanych przez najnowocześniejsze modele językowe.',
-        fullDesc: 'Współpraca przy trenowaniu i ewaluacji zaawansowanych modeli sztucznej inteligencji w firmie Outlier. Skupienie na precyzji odpowiedzi technicznych, poprawności generowanego kodu oraz zgodności z zadanymi ograniczeniami.',
+        title: 'Trening i Zaawansowana Ewaluacja Modeli LLM & Multimodal AI (RLHF / SFT)',
+        shortDesc: 'Ewaluacja i doskonalenie modeli językowych (LLM) oraz multimodalnych: analiza poprawności kodu programistycznego, tworzenie wzorcowych danych (Ground Truth) pod RLHF/SFT, rygorystyczne testy Instruction Following oraz modelowanie głosu i ekspresji emocjonalnej.',
+        fullDesc: 'Współpraca przy procesie dostrajania modeli sztucznej inteligencji (RLHF – Reinforcement Learning from Human Feedback oraz Supervised Fine-Tuning) dla wiodących architektur LLM i systemów multimodalnych. Zakres prac ewoluował od precyzyjnej oceny lingwistyczno-stylistycznej w języku polskim, przez rygorystyczną weryfikację algorytmów programistycznych i wyłapywanie halucynacji, aż po zadania multimodalne obejmujące ekspresję emocjonalną w próbkach dźwiękowych.',
         highlights: [
-          'Konstruowanie zaawansowanych promptów testowych mających na celu wykrycie halucynacji oraz błędów logicznych w kodzie Python / C++.',
-          'Ręczny i automatyczny benchmarking generowanych rozwiązań algorytmicznych.',
-          'Dostarczanie precyzyjnych zestawów danych korygujących (RLHF - Reinforcement Learning from Human Feedback).'
+          'Ewaluacja kodu i logiki technicznej: Analiza generowanego przez modele kodu (Python, C++, SQL), identyfikacja błędów logicznych, podatności, nieoptymalnej złożoności obliczeniowej oraz tworzenie poprawionych rozwiązań wzorcowych (Golden Responses)[cite: 1, 2].',
+          'Curation danych pod RLHF i SFT: Dostarczanie precyzyjnego feedbacku korygującego, tworzenie wieloetapowych uzasadnień (Chain-of-Thought) i ocena odpowiedzi w oparciu o rygorystyczne kryteria: poprawność merytoryczna, bezpieczeństwo i brak halucynacji[cite: 1, 2].',
+          'Rygorystyczne testowanie Instruction Following: Weryfikacja zdolności modelu do bezwzględnego przestrzegania złożonych ograniczeń (formaty JSON/Markdown, narzucone słowa kluczowe, negacje, limity tokenów i wytyczne strukturalne).',
+          'Zadania multimodalne & Modelowanie Audio: Nagrywanie, modulacja i ocena próbek głosowych pod kątem naturalności ludzkiej mowy, płynności frazowania, pauzowania oraz zadanego ładunku emocjonalnego (np. empatia, ton asertywny, intonacja pytań) dla systemów Speech-to-Speech / TTS.',
+          'Lokalizacja i niuanse języka polskiego: Kalibracja modeli pod kątem idiomatyki, poprawności gramatycznej, naturalnego brzmienia oraz eliminacji kalk językowych z angielskiego.',
+          'Benchmarking nowych wersji modeli: Porównywanie generacji z kolejnych iteracji i wersji frontier models w celu weryfikacji regresji oraz postępów w rozumowaniu logicznym.'
         ],
-        techSpecs: `• Obszar: Python, Algorithms, Prompt Engineering, RLHF\n• Zadania: Debugging kodu LLM, ewaluacja złożoności obliczeniowej O(n)\n• Rezultat: Podniesienie jakości odpowiedzi modeli w zadaniach programistycznych`,
-        tags: ['LLM Benchmark', 'Python', 'Prompt Engineering', 'RLHF', 'Code Debugging']
+        techSpecs: `// Przykładowy schemat kryteriów ewaluacji (RLHF / Instruction Following Rubric)
+      {
+          "task_type": "Code_Debugging_&_Multimodal_Tone",
+          "evaluation_metrics": {
+          "truthfulness_and_logic": "PASS (Zero Hallucination / Valid Syntax)",
+          "constraint_adherence": "100% (JSON Schema, exact keywords matched)",
+          "code_optimization": "Verified Time Complexity O(N log N)",
+          "multimodal_voice_naturalness": "Human-grade intonation & emotion match"
+        },
+        "feedback_loop": {
+          "identified_issue": "Subtle logic bug in boundary conditions (index out of range)",
+          "correction_strategy": "SFT Golden Response provided with step-by-step reasoning"
+        }
+      }`,
+        tags: [
+          'RLHF & SFT Training',
+          'LLM Evaluation & Benchmarking',
+          'Code Debugging & Review',
+          'Instruction Following',
+          'Prompt Engineering',
+          'Multimodal & Voice AI',
+          'Emotion & Tone Modulation',
+          'NLP Polish Localization'
+        ]
       },
       {
         id: 'tools-automation',

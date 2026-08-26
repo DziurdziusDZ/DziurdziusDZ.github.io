@@ -430,22 +430,69 @@
           # Discount Factor (Gamma) = 0.99 | Epsilon Decay = Wykładniczy | Target Net Update co N kroków`,
           tags: ['Python', 'CARLA Simulator', 'TensorFlow / Keras', 'Deep Q-Network (DQN)', 'Xception', 'MobileNetV2', 'OpenCV', 'NumPy']
       },
-      {
+{
         id: 'plc-tia',
         category: 'plc',
-        categoryName: 'Automatyka Przemysłowa',
+        categoryName: 'Automatyka Przemysłowa & Standardy PLC',
         badgeColor: 'emerald',
-        title: 'Modułowe oprogramowanie PLC & Uruchomienia obiektowe',
-        shortDesc: 'Projektowanie logiki sterowania dla sterowników Siemens S7-1200/1500 w TIA Portal oraz commissioning na obiektach produkcyjnych.',
-        fullDesc: 'Doświadczenie w projektowaniu i optymalizacji kodu sterowników PLC w strukturze modułowej. Praca w rzeczywistych warunkach produkcyjnych przy 2 dużych projektach uruchomieniowych.',
+        title: 'Kompleksowy System ASRS: Standaryzacja PLC/HMI, Inspekcja i Commissioning Obiektowy',
+        shortDesc: 'Kompleksowe wdrożenie systemu intralogistyki ASRS (Siemens S7-1500 / WinCC): współtworzenie modułowego standardu PLC (FB/UDT), projekt całego HMI z dedykowanymi faceplate\'ami i skryptami, algorytmy CoG 2D, integracja Keyence, EFAFLEX, handshake WMS oraz commissioning na obiekcie.',
+        fullDesc: 'Pełny cykl inżynierski obejmujący projektowanie, standaryzację, programowanie oraz rozruch obiektowy dla wielostrefowego magazynu wysokiego składowania (ASRS) i powiązanych linii transportu palet. Projekt łączył optymalizację czasu cyklu (Cycle Time), zaawansowaną aparaturę kontrolno-pomiarową, autorskie algorytmy wyważenia ładunku, integrację systemów nadrzędnych WMS/WCS oraz ujednolicenie architektury oprogramowania w dziale automatyki.',
         highlights: [
-          'Pisanie przejrzystego, skalowalnego kodu w językach Structured Text (SCL) oraz Ladder Diagram (LAD).',
-          'Diagnostyka pętli sygnałowych, integracja falowników, wysp zaworowych oraz komunikacji PROFINET.',
-          'Tworzenie ekranów operatorskich HMI w Siemens WinCC z intuicyjną obsługą alarmów i trybów manualnych.',
-          'Współtworzenie wewnętrznych bibliotek funkcyjnych (FB/FC) i dokumentacji techniczno-rozruchowej (DTR).'
+          'Współtworzenie modułowego standardu PLC: Opracowanie zunifikowanych bloków funkcyjnych (FB/FC) oraz struktur danych (UDT) do obsługi napędów, czujników i stacji technologicznych, co skróciło czas parametryzacji kolejnych linii.',
+          'Kompletny projekt HMI (Siemens WinCC): Zaprojektowanie i wdrożenie całości wizualizacji operatorskiej od podstaw – budowa biblioteki parametryzowalnych Faceplate\'ów (np. stacje pomiarowe, napędy, bramy) powiązanych bezpośrednio ze strukturami UDT w PLC oraz implementacja skryptów dynamicznych.',
+          'Matematyczna analiza wyważenia ładunku (CoG): Autorski algorytm wyznaczania środka ciężkości palety w przestrzeni 2D na bazie 4 przetworników masowych, funkcja dynamicznej elipsy dopuszczalnego błędu oraz buforowanie wartości szczytowych (Tracehold).',
+          'Sterowanie dynamiką przejazdu i Cycle Time: Wielostopniowe profilowanie ramp hamowania, precyzyjne pozycjonowanie na stacjach zdawczo-odbiorczych oraz eliminacja wąskich gardeł przepływu ładunków.',
+          'Integracja urządzeń obiektowych: Integracja stacjonarnych skanerów kodów Keyence (parsowanie stringów do rekordu palety), bram szybkobieżnych EFAFLEX (blokady stref bezpieczeństwa) oraz wag przemysłowych Mettler Toledo.',
+          'Deterministyczny Handshake WMS/WCS: Bezpieczna synchronizacja stanów (Data Ready, Request, Acknowledge) eliminująca ryzyko zakleszczeń i gubienia ładunków w bazie danych.',
+          'Rozruch obiektowy (Commissioning): Testy w warunkach produkcyjnych, walidacja schematów elektrycznych EPLAN, diagnostyka pętli sygnałowych PROFINET oraz przygotowanie dokumentacji techniczno-rozruchowej (DTR)[cite: 1, 2].'
         ],
-        techSpecs: `// Przykładowa struktura bloku FB w SCL (Siemens TIA Portal)\nFUNCTION_BLOCK "FB_DriveControl"\nVAR_INPUT\n    bEnable : BOOL;\n    rTargetSpeed : REAL;\nEND_VAR\nVAR_OUTPUT\n    bReady : BOOL;\n    bFault : BOOL;\nEND_VAR\n\nIF bEnable AND NOT bFault THEN\n    #bReady := TRUE;\n    // Logika sterowania napędem\nEND_IF;`,
-        tags: ['Siemens TIA Portal', 'S7-1200 / S7-1500', 'SCL', 'LAD', 'WinCC', 'Commissioning']
+        techSpecs: `// 1. Fragment struktury modułowego Standardu FB & Faceplate Interface
+      TYPE "UDT_StationHMI_Interface"
+      STRUCT
+          bManualMode       : BOOL;         // Tryb ręczny z poziomu Faceplate
+          bAutoMode         : BOOL;         // Tryb automatyczny
+          bAlarmActive      : BOOL;         // Flaga zbiorcza alarmu do HMI
+          rCalculatedRadius : REAL;         // Wyliczony promień odchylenia środka ciężkości
+          rMaxAllowedRadius : REAL;         // Dynamiczny limit z równania elipsy
+          strCurrentBarcode : STRING[32];   // Odczyt z czytnika Keyence
+      END_STRUCT
+      END_TYPE
+
+      // 2. SCL: Logika wyznaczania środka ciężkości (CoG) i dynamicznej elipsy tolerancji
+      #sWork.iTotalMass := #sWork.iWeightLB + #sWork.iWeightRB + #sWork.iWeightRT + #sWork.iWeightLT;
+
+      IF #sWork.iTotalMass > 0.0 THEN
+          #o_iHorizontalDeviation := ((#sWork.iHorizontalLength / 4.0) * 
+              ((#sWork.iWeightRB + #sWork.iWeightRT) - (#sWork.iWeightLB + #sWork.iWeightLT))) / #sWork.iTotalMass;
+          #o_iVerticalDeviation := ((#sWork.iVerticalLength / 4.0) * 
+              ((#sWork.iWeightRT + #sWork.iWeightLT) - (#sWork.iWeightLB + #sWork.iWeightRB))) / #sWork.iTotalMass;
+
+          #o_iActualRadius := SQRT(SQR(#o_iHorizontalDeviation) + SQR(#o_iVerticalDeviation));
+
+          // Dynamiczny limit tolerancji (równanie elipsy błędu)
+          #sWork.NormalizedX := #o_iHorizontalDeviation / #i_Max_X_Limit;
+          #sWork.NormalizedY := #o_iVerticalDeviation / #i_Max_Y_Limit;
+          #o_EllipseFactor := SQRT(SQR(#sWork.NormalizedX) + SQR(#sWork.NormalizedY));
+    
+          #o_MovingInRightDirection := (#o_iActualRadius < #sWork.Last_Radius_Sample);
+          #sWork.Last_Radius_Sample := #o_iActualRadius;
+          #o_Alarm_Deviation_Error := (#o_EllipseFactor > 1.0);
+      END_IF;`,
+        tags: [
+          'Siemens TIA Portal',
+          'S7-1500 / S7-1200',
+          'Structured Text (SCL)',
+          'PLC Programming Standards',
+          'WinCC HMI & Custom Faceplates',
+          'ASRS & Intralogistics',
+          'Center of Gravity (CoG)',
+          'Cycle Time Optimization',
+          'Keyence & Mettler Toledo',
+          'EFAFLEX High-Speed Doors',
+          'WMS/WCS Handshake',
+          'Commissioning & DTR'
+        ]
       },
       {
         id: 'ai-eval',

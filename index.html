@@ -430,7 +430,7 @@
           # Discount Factor (Gamma) = 0.99 | Epsilon Decay = Wykładniczy | Target Net Update co N kroków`,
           tags: ['Python', 'CARLA Simulator', 'TensorFlow / Keras', 'Deep Q-Network (DQN)', 'Xception', 'MobileNetV2', 'OpenCV', 'NumPy']
       },
-{
+      {
         id: 'plc-tia',
         category: 'plc',
         categoryName: 'Automatyka Przemysłowa & Standardy PLC',
@@ -448,37 +448,37 @@
           'Rozruch obiektowy (Commissioning): Testy w warunkach produkcyjnych, walidacja schematów elektrycznych EPLAN, diagnostyka pętli sygnałowych PROFINET oraz przygotowanie dokumentacji techniczno-rozruchowej (DTR)[cite: 1, 2].'
         ],
         techSpecs: `// 1. Fragment struktury modułowego Standardu FB & Faceplate Interface
-      TYPE "UDT_StationHMI_Interface"
-      STRUCT
-          bManualMode       : BOOL;         // Tryb ręczny z poziomu Faceplate
-          bAutoMode         : BOOL;         // Tryb automatyczny
-          bAlarmActive      : BOOL;         // Flaga zbiorcza alarmu do HMI
-          rCalculatedRadius : REAL;         // Wyliczony promień odchylenia środka ciężkości
-          rMaxAllowedRadius : REAL;         // Dynamiczny limit z równania elipsy
-          strCurrentBarcode : STRING[32];   // Odczyt z czytnika Keyence
-      END_STRUCT
-      END_TYPE
+            TYPE "UDT_StationHMI_Interface"
+            STRUCT
+                bManualMode       : BOOL;         // Tryb ręczny z poziomu Faceplate
+                bAutoMode         : BOOL;         // Tryb automatyczny
+                bAlarmActive      : BOOL;         // Flaga zbiorcza alarmu do HMI
+                rCalculatedRadius : REAL;         // Wyliczony promień odchylenia środka ciężkości
+                rMaxAllowedRadius : REAL;         // Dynamiczny limit z równania elipsy
+                strCurrentBarcode : STRING[32];   // Odczyt z czytnika Keyence
+            END_STRUCT
+            END_TYPE
 
-      // 2. SCL: Logika wyznaczania środka ciężkości (CoG) i dynamicznej elipsy tolerancji
-      #sWork.iTotalMass := #sWork.iWeightLB + #sWork.iWeightRB + #sWork.iWeightRT + #sWork.iWeightLT;
+            // 2. SCL: Logika wyznaczania środka ciężkości (CoG) i dynamicznej elipsy tolerancji
+            #sWork.iTotalMass := #sWork.iWeightLB + #sWork.iWeightRB + #sWork.iWeightRT + #sWork.iWeightLT;
 
-      IF #sWork.iTotalMass > 0.0 THEN
-          #o_iHorizontalDeviation := ((#sWork.iHorizontalLength / 4.0) * 
-              ((#sWork.iWeightRB + #sWork.iWeightRT) - (#sWork.iWeightLB + #sWork.iWeightLT))) / #sWork.iTotalMass;
-          #o_iVerticalDeviation := ((#sWork.iVerticalLength / 4.0) * 
-              ((#sWork.iWeightRT + #sWork.iWeightLT) - (#sWork.iWeightLB + #sWork.iWeightRB))) / #sWork.iTotalMass;
+            IF #sWork.iTotalMass > 0.0 THEN
+                #o_iHorizontalDeviation := ((#sWork.iHorizontalLength / 4.0) * 
+                    ((#sWork.iWeightRB + #sWork.iWeightRT) - (#sWork.iWeightLB + #sWork.iWeightLT))) / #sWork.iTotalMass;
+                #o_iVerticalDeviation := ((#sWork.iVerticalLength / 4.0) * 
+                    ((#sWork.iWeightRT + #sWork.iWeightLT) - (#sWork.iWeightLB + #sWork.iWeightRB))) / #sWork.iTotalMass;
 
-          #o_iActualRadius := SQRT(SQR(#o_iHorizontalDeviation) + SQR(#o_iVerticalDeviation));
+                #o_iActualRadius := SQRT(SQR(#o_iHorizontalDeviation) + SQR(#o_iVerticalDeviation));
 
-          // Dynamiczny limit tolerancji (równanie elipsy błędu)
-          #sWork.NormalizedX := #o_iHorizontalDeviation / #i_Max_X_Limit;
-          #sWork.NormalizedY := #o_iVerticalDeviation / #i_Max_Y_Limit;
-          #o_EllipseFactor := SQRT(SQR(#sWork.NormalizedX) + SQR(#sWork.NormalizedY));
+                // Dynamiczny limit tolerancji (równanie elipsy błędu)
+                #sWork.NormalizedX := #o_iHorizontalDeviation / #i_Max_X_Limit;
+                #sWork.NormalizedY := #o_iVerticalDeviation / #i_Max_Y_Limit;
+                #o_EllipseFactor := SQRT(SQR(#sWork.NormalizedX) + SQR(#sWork.NormalizedY));
     
-          #o_MovingInRightDirection := (#o_iActualRadius < #sWork.Last_Radius_Sample);
-          #sWork.Last_Radius_Sample := #o_iActualRadius;
-          #o_Alarm_Deviation_Error := (#o_EllipseFactor > 1.0);
-      END_IF;`,
+                #o_MovingInRightDirection := (#o_iActualRadius < #sWork.Last_Radius_Sample);
+                #sWork.Last_Radius_Sample := #o_iActualRadius;
+                #o_Alarm_Deviation_Error := (#o_EllipseFactor > 1.0);
+            END_IF;`,
         tags: [
           'Siemens TIA Portal',
           'S7-1500 / S7-1200',
@@ -569,7 +569,7 @@
                 'LaTeX',
                 'Jira & Confluence'
               ]
-          },
+      },
 
     // 2. Render Projects Cards
     function renderProjects(filter = 'all') {

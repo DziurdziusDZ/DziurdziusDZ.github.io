@@ -538,20 +538,38 @@
       {
         id: 'tools-automation',
         category: 'tools',
-        categoryName: 'Software & Integracje',
+        categoryName: 'DevOps, Narzędzia & Automatyzacja',
         badgeColor: 'teal',
-        title: 'Narzędzia skryptowe i automatyzacja testów (JS/Excel)',
-        shortDesc: 'Integracja procesów testowych oraz zarządzania zadaniami w Jira z wykorzystaniem skryptów pomocniczych.',
-        fullDesc: 'Automatyzacja powtarzalnych procesów raportowania, walidacji sygnałów I/O oraz zarządzania projektami inżynierskimi.',
+        title: 'Środowisko Inżynierskie, Automatyzacja Skryptowa & Kontrola Wersji',
+        shortDesc: 'Warsztat narzędziowy wspierający inżynierię oprogramowania i automatykę: automatyzacja zadań (VBA w Excelu i skrypty WinCC), praca w systemie Linux, konteneryzacja Docker, kontrola wersji (Git + TIA Portal Multiuser) oraz zarządzanie projektami w Jira/Confluence.',
+        fullDesc: 'Zestaw praktyk i narzędzi wykorzystywanych do usprawniania procesów inżynierskich, tworzenia dokumentacji, automatyzacji powtarzalnych zadań oraz pracy zespołowej nad kodem PLC i aplikacjami software\'owymi. Łączy codzienną pracę w środowisku Linux, konteneryzację usług, systemy kontroli wersji dla kodu i sterowników PLC oraz standaryzowane metody raportowania i zarządzania zadaniami.',
         highlights: [
-          'Budowanie skryptów w JavaScript wspomagających analizę tabel sygnałów oraz weryfikację list I/O.',
-          'Automatyzacja arkuszy testowych Excel pod kątem tworzenia dokumentacji odbiorczej.',
-          'Sprawna integracja z workflow w systemach Jira i Confluence.'
+          'Automatyzacja i skrypty (VBA & HMI): Tworzenie makr w Excelu do automatycznego przetwarzania danych pomiarowych i generowania zestawień oraz pisanie skryptów pomocniczych na panelach HMI (WinCC).',
+          'Kontrola wersji & Multiuser Engineering: Wykorzystanie Git/GitHub w projektach programistycznych oraz TIA Portal Multiuser Engineering do jednoczesnej, bezkolizyjnej pracy wielu programistów nad jednym projektem PLC[cite: 1, 2].',
+          'Środowisko pracy & Konteneryzacja: Linux jako podstawowy system operacyjny na maszynie deweloperskiej; Docker do szybkiego wdrażania lokalnych środowisk testowych i relacyjnych baz danych (SQL)[cite: 1, 2].',
+          'Zarządzanie projektem (Jira & Confluence): Obsługa zgłoszeń i zadań wdrożeniowych, śledzenie punktów otwartych podczas uruchomień na obiekcie (Jira) oraz utrzymywanie bazy wiedzy i dokumentacji technicznej (Confluence)[cite: 1, 2].',
+          'Obliczenia inżynierskie & Dokumentacja: Modelowanie i analiza układów sterowania w środowisku MATLAB/Simulink; profesjonalny skład zaawansowanej dokumentacji technicznej i publikacji naukowych w systemie LaTeX (praca inżynierska i magisterska)[cite: 1, 2].'
         ],
-        techSpecs: `// Skrypty walidacji arkuszy sygnałów I/O\nconst validateSignalList = (signals) => {\n  return signals.filter(sig => !sig.address || !sig.type);\n};`,
-        tags: ['JavaScript', 'Excel VBA / Scripts', 'Jira API', 'Git', 'Linux']
-      }
-    ];
+        techSpecs: `# 1. Typowy workflow deweloperski (Linux / Docker / Git)
+      $ docker run --name test-db -e POSTGRES_PASSWORD=secret -d -p 5432:5432 postgres
+      $ git checkout -b feature/hmi-scripts-integration
+      $ git commit -m "feat(hmi): add automated VBA export routines and alarm parsing"
+
+      # 2. TIA Multiuser & Scripting Stack
+      • PLC Collaboration: Siemens TIA Multiuser Server / Check-In Sessions
+      • Tooling: Linux (Ubuntu), Git, Docker, MATLAB, MS Office, LaTeX (TeX Live)`,
+        tags: [
+          'Linux',
+          'Git / GitHub',
+          'TIA Multiuser Server',
+          'Docker & SQL',
+          'VBA / Excel Automation',
+          'WinCC Scripting',
+          'MATLAB / Simulink',
+          'LaTeX',
+          'Jira & Confluence'
+        ]
+      },
 
     // 2. Render Projects Cards
     function renderProjects(filter = 'all') {

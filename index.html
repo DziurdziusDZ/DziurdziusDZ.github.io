@@ -133,7 +133,7 @@
         <!-- Metrics cards -->
         <div class="grid grid-cols-3 gap-4 pt-2 max-w-lg mx-auto md:mx-0">
           <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 text-center">
-            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400">2+</div>
+            <div class="text-xl sm:text-2xl font-bold font-mono text-sky-400">1+</div>
             <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Lata Exp.</div>
           </div>
           <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 text-center">
@@ -405,17 +405,30 @@
         category: 'ai',
         categoryName: 'AI / Reinforcement Learning',
         badgeColor: 'sky',
-        title: 'Autonomiczny pojazd w symulatorze CARLA (Praca Magisterska)',
-        shortDesc: 'System nawigacji i omijania przeszkód dla pojazdu autonomicznego z wykorzystaniem sieci neuronowych i Reinforcement Learning.',
-        fullDesc: 'Projekt badawczo-inżynierski polegający na zaprojektowaniu, wytrenowaniu i przetestowaniu algorytmów uczenia przez wzmacnianie (RL) w realistycznym środowisku symulacyjnym CARLA. Głównym zadaniem było bezkolizyjne doprowadzenie pojazdu z punktu A do punktu B z zachowaniem płynności toru jazdy.',
+        title: 'Autonomiczne sterowanie pojazdem w środowisku miejskim (Praca Magisterska)',
+        shortDesc: 'Implementacja i analiza porównawcza algorytmów Q-Learning oraz Deep Q-Network (MobileNetV2 vs Xception) do sterowania pojazdem w symulatorze CARLA w oparciu o obraz RGB.',
+        fullDesc: 'Projekt badawczo-inżynierski zrealizowany na Politechnice Śląskiej, dotyczący autonomicznego prowadzenia pojazdu (Tesla Model 3) w środowisku symulacyjnym CARLA. Zadaniem modelu było podejmowanie decyzji w czasie rzeczywistym wyłącznie na podstawie klatek wideo z kamery RGB (bez znajomości mapy czy współrzędnych GPS), utrzymywanie wyznaczonego pasa ruchu oraz unikanie kolizji ze stałymi elementami infrastruktury.',
         highlights: [
-          'Zbudowanie potoku przetwarzania obrazu w czasie rzeczywistym z kamer pokładowych pojazdu (RGB / segmentacja).',
-          'Implementacja i porównanie modeli głębokiego uczenia przez wzmacnianie (Deep Q-Learning / Actor-Critic) z podejściem klasycznym.',
-          'Zaprojektowanie funkcji nagrody (reward function) uwzględniającej prędkość, odchylenie od osi pasa oraz dystans od przeszkód.',
-          'Analiza telemetrii i wizualizacja wyników zbieżności uczenia przy użyciu Matplotlib i NumPy.'
+          'Zaprojektowanie potoku akwizycji i przetwarzania obrazu: kamera RGB (640x480, FOV 110°), normalizacja klatek do [0, 1] oraz losowa filtracja filtrem Gaussa (5x5) do redukcji szumów i augmentacji.',
+          'Implementacja i porównanie 3 podejść RL: klasycznego Q-Learningu z aproksymacją CNN oraz dwóch wariantów DQN (MobileNetV2 i Xception) ze strukturami Target Network i Replay Buffer.',
+          'Wieloetapowy eksperyment długoterminowego uczenia (24 300 epizodów dla Xception) z harmonogramem wykładniczego zaniku epsilon i fazami wymuszonej re-eksploracji.',
+          'Zaawansowane modelowanie funkcji celu (Reward Shaping): kary za kolizję (-200), bezczynność/stanie w miejscu, odchylenie od osi pasa oraz nagradzanie utrzymywania prędkości powyżej 30 km/h.',
+          'Wnioski: DQN z siecią Xception wykazał najwyższą zdolność ekstrakcji cech i spójność podejmowanych decyzji w porównaniu do lżejszego MobileNetV2 oraz tablicowego Q-Learningu.'
         ],
-        techSpecs: `// CARLA Environment & Policy Training Loop\nimport carla\nimport tensorflow as tf\nfrom tensorflow.keras import layers\n\n# Model Policy Architecture\nmodel = tf.keras.Sequential([\n    layers.Conv2D(32, (5, 5), activation='relu', input_shape=(120, 160, 3)),\n    layers.MaxPooling2D((2, 2)),\n    layers.Flatten(),\n    layers.Dense(64, activation='relu'),\n    layers.Dense(num_actions, activation='linear')\n])`,
-        tags: ['Python', 'TensorFlow / Keras', 'CARLA Simulator', 'NumPy', 'Matplotlib', 'Reinforcement Learning']
+        techSpecs: `# Implementacja DQN w oparciu o sieć Xception (Keras / TensorFlow)
+          def create_model(self):
+              base_model = Xception(weights=None, include_top=False, 
+                                    input_shape=(IM_HEIGHT, IM_WIDTH, 3))
+              x = base_model.output
+              x = GlobalAveragePooling2D()(x)
+              predictions = Dense(5, activation="linear")(x) # Rozszerzone akcje
+              model = Model(inputs=base_model.input, outputs=predictions)
+              model.compile(loss="mse", optimizer=Adam(learning_rate=0.001))
+              return model
+
+          # Kluczowe hiperparametry:
+          # Discount Factor (Gamma) = 0.99 | Epsilon Decay = Wykładniczy | Target Net Update co N kroków`,
+          tags: ['Python', 'CARLA Simulator', 'TensorFlow / Keras', 'Deep Q-Network (DQN)', 'Xception', 'MobileNetV2', 'OpenCV', 'NumPy']
       },
       {
         id: 'plc-tia',
